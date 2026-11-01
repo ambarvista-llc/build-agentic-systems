@@ -17,7 +17,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 USAGE="usage: repo-baseline.sh <owner>/<repo> [--apply]"
 parse_args "$@"
-[[ $TARGET =~ ^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+$ && $TARGET != *..* ]] || { echo "$USAGE" >&2; exit 2; }
+[[ $TARGET =~ ^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+$ && $TARGET != *..* && $TARGET != */. ]] || { echo "$USAGE" >&2; exit 2; }
 R="repos/$TARGET"
 VISIBILITY=$(gh api "$R" --jq .visibility) || { echo "can't read $TARGET" >&2; exit 2; }
 echo "Baseline for $TARGET ($VISIBILITY)"
@@ -34,8 +34,7 @@ PROTECT_MAIN='{
       "required_review_thread_resolution": true}}
   ]}'
 # required_approving_review_count is 0 because GitHub won't let you approve your own PRs.
-# Accepted risk: an admin or agent token can merge without review. Raise it to 1
-# (and require code owner review) once agents open PRs through a bot account.
+# Raise it to 1 (and require code owner review) once agents open PRs through a bot account.
 PROTECT_TAGS='{
   "name": "protect-episode-tags", "target": "tag", "enforcement": "active", "bypass_actors": [],
   "conditions": {"ref_name": {"include": ["refs/tags/ep*"], "exclude": []}},
