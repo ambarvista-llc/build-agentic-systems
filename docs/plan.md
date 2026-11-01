@@ -142,13 +142,15 @@ Security-first from day one: it's cheap to start right, and it's a good first to
 - **Agent-specific risks:** OWASP Top 10 for LLM Applications (prompt injection, unsafe output handling, excessive agent permissions).
 - **Untrusted input:** agents act only on content from allowlisted accounts. PR comments, fetched pages, source documents, and LLM output are treated as data, never as instructions.
 - **Secrets:** voice samples, brand assets, tokens, and analytics never enter the public repo.
-- **Repo settings (built, checked 2026-11-01):** pull requests restricted to collaborators; Issues, Discussions, Wiki, and Projects off; squash merges only; a `main` ruleset (PRs required, no force pushes or deletion, linear history); a ruleset protecting `ep*` tags; secret scanning with push protection; Dependabot and malware alerts; private vulnerability reporting.
+- **Repo settings (built, checked 2026-11-01):** pull requests restricted to collaborators; Issues, Discussions, Wiki, and Projects off; squash merges only; a `main` ruleset (PRs required, no force pushes or deletion, linear history); a ruleset protecting `ep*` tags; secret scanning with push protection; Dependabot and malware alerts; private vulnerability reporting; immutable releases; commit comments off.
 - **Org settings (built, checked 2026-11-01):** 2FA required (secure methods only), base permission none, member privileges locked down, Actions limited to GitHub-owned actions with SHA pinning required, read-only `GITHUB_TOKEN`, approval required for outside contributors' workflow runs, third-party app access restricted, the Claude GitHub app scoped to selected repos.
 - **Free-plan limits (checked 2026-11-01; GitHub's plans change):** rulesets aren't available on private repos (the API asks for GitHub Pro or a public repo), and org-wide rulesets need GitHub Team. Check [GitHub's plans](https://github.com/pricing) before relying on these.
 
 ### The security audit agent (planned)
 
 Grows out of `scripts/security/`.
+
+- **Built (the seed):** `repo-baseline.sh` and `org-baseline.sh` audit by default (GET requests only, exit 1 on drift). `--apply` asks for a y/N on the terminal, writes only what drifted, then audits again. Settings with no API are listed as manual.
 
 - **Audit mode is read-only.** It reports how a repo and its org differ from the baseline.
 - **Apply mode needs approval.** The agent shows the exact changes it proposes and waits for me to approve before changing anything.
