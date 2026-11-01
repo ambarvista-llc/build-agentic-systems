@@ -17,7 +17,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 USAGE="usage: repo-baseline.sh <owner>/<repo> [--apply]"
 parse_args "$@"
-[[ $TARGET =~ ^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+$ && $TARGET != *..* ]] || { echo "$USAGE" >&2; exit 2; }
+[[ $TARGET =~ ^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+$ && $TARGET != *..* && $TARGET != */. ]] || { echo "$USAGE" >&2; exit 2; }
 R="repos/$TARGET"
 VISIBILITY=$(gh api "$R" --jq .visibility) || { echo "can't read $TARGET" >&2; exit 2; }
 echo "Baseline for $TARGET ($VISIBILITY)"

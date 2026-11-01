@@ -14,6 +14,8 @@ Episodes are listed here as they're published, each with a link to the code exac
 ## Where things are
 
 - [`docs/plan.md`](docs/plan.md): the working plan: what's built, what's next, and why
+- [`.specify/memory/constitution.md`](.specify/memory/constitution.md) and [`docs/security-rules.md`](docs/security-rules.md): the rules agents follow
+- [`AGENTS.md`](AGENTS.md) and [`CLAUDE.md`](CLAUDE.md): instructions for coding agents
 - [`scripts/security/`](scripts/security/): the security baseline for a repo and an org (the seed of a planned security audit agent)
 - [`SECURITY.md`](SECURITY.md): how to report a vulnerability privately
 

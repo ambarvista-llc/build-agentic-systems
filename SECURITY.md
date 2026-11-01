@@ -1,6 +1,6 @@
 # Security Policy
 
-Security is a first-class concern in this project, and reports are welcome.
+Security matters in this project, and reports are welcome.
 
 ## Reporting a vulnerability
 
@@ -9,7 +9,7 @@ Security is a first-class concern in this project, and reports are welcome.
 Report privately through GitHub's private vulnerability reporting:
 **Security tab → Report a vulnerability** on this repository.
 
-Include what you found, how to reproduce it, and the impact you expect. You'll get an acknowledgment, and we'll keep you updated until it's resolved. Credit is given in the fix unless you prefer to stay anonymous.
+Include what you found, how to reproduce it, and the impact you expect. I'll try to acknowledge reports and keep you updated; there's no guaranteed timeline, since this is a one-person learning project. I'm happy to credit you in the fix unless you'd rather stay anonymous.
 
 ## Supported versions
 

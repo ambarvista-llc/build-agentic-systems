@@ -144,8 +144,10 @@ The concrete rules are in [`docs/security-rules.md`](security-rules.md); this se
 - **Agent-specific risks:** OWASP Top 10 for LLM Applications (prompt injection, unsafe output handling, excessive agent permissions).
 - **Untrusted input:** agents act only on content from allowlisted accounts. PR comments, fetched pages, source documents, and LLM output are treated as data, never as instructions.
 - **Secrets:** voice samples, brand assets, tokens, and analytics never enter the public repo.
-- **Repo settings (built, checked 2026-11-01):** pull requests restricted to collaborators; Issues, Discussions, Wiki, and Projects off; squash merges only; a `main` ruleset (PRs required, no force pushes or deletion, linear history); a ruleset protecting `ep*` tags; secret scanning with push protection; Dependabot and malware alerts; private vulnerability reporting; immutable releases; commit comments off.
-- **Org settings (built, checked 2026-11-01):** 2FA required (secure methods only), base permission none, member privileges locked down, Actions limited to GitHub-owned actions with SHA pinning required, read-only `GITHUB_TOKEN`, approval required for outside contributors' workflow runs, third-party app access restricted, the Claude GitHub app scoped to selected repos.
+- **Repo settings (built, checked 2026-11-01 by the audit script):** Issues, Discussions, Wiki, and Projects off; squash merges only, auto-merge off; a `main` ruleset (PRs required, no force pushes or deletion, linear history); a ruleset protecting `ep*` tags; secret scanning with push protection; Dependabot alerts and security updates; private vulnerability reporting; immutable releases.
+- **Repo settings (manual, set by hand; the script can't check them):** pull requests restricted to collaborators, malware alerts, commit comments off.
+- **Org settings (built, checked 2026-11-01 by the audit script):** 2FA required, base permission none, member privileges locked down as far as the free plan allows, Actions limited to GitHub-owned actions with SHA pinning required, read-only `GITHUB_TOKEN`, approval required for outside contributors' workflow runs, the Claude GitHub app scoped to selected repos.
+- **Org settings (manual, the script can't check them):** secure 2FA methods only, restricted third-party OAuth app access.
 - **Free-plan limits (checked 2026-11-01; GitHub's plans change):** rulesets aren't available on private repos (the API asks for GitHub Pro or a public repo), and org-wide rulesets need GitHub Team. Check [GitHub's plans](https://github.com/pricing) before relying on these.
 
 ### The security audit agent (planned)
@@ -160,7 +162,7 @@ Grows out of `scripts/security/`.
 
 ### Rollout (as it becomes useful)
 
-1. Constitution, `CLAUDE.md`/`AGENTS.md`, and pre-commit hooks (secret scanning, linters, tests).
+1. Constitution and `CLAUDE.md`/`AGENTS.md` (built). Pre-commit hooks (secret scanning, linters, tests) are planned.
 2. CodeQL and dependency checks in CI once there's code.
 3. Agent hooks that enforce constitution rules, once agents write code regularly.
 
@@ -180,7 +182,7 @@ Each video links to the exact code it shows.
 - **Tags:** one annotated tag per episode, named `epNN-<slug>` (`ep00-intro`, ...). Software versions (`v0.1.0`, ...) are separate, if ever needed.
 - **Protected (built):** a GitHub ruleset (`protect-episode-tags`) blocks deleting, moving, or force-updating `ep*` tags.
 - **When publishing (manual for now):** create the tag, add a GitHub Release with the video link, and link the tag in the video description. Add the video to the README's Episodes table.
-- **What the tag gives viewers:** the engine code as it was in the video, to read and run. Rebuilding the video itself also needs the private script, scene spec, and assets, which are tagged the same way in the private repo, so I can reproduce any video.
+- **What the tag gives viewers:** the engine code as it was in the video, to read and run. Rebuilding the video itself also needs the private script, scene spec, and assets, which are tagged the same way in the private repo, so a video can be rebuilt.
 
 ## Possible later directions
 
@@ -197,14 +199,14 @@ Ideas, not plans. None get code or schema until a real episode or use case needs
 
 The next few useful pieces, roughly in order. Each becomes a spec in `specs/` when it's time.
 
-1. **Constitution and agent instructions:** the rules agents follow, before they write pipeline code.
+1. **Constitution and agent instructions (built):** the rules agents follow, before they write pipeline code.
 2. **001-bootstrap-renderer:** just enough to make Episode 0.
    - Scene-spec JSON Schema
    - Remotion project with the first components (`TitleCard`, `PipelineDiagram`, `LoopDiagram`, `EndCard`)
    - CLI that renders a scene-spec file
    - Chatterbox narration with my cloned voice, with line timing setting scene durations
    - Script and scene spec written by hand with Claude's help; review and publishing by hand
-   - Episode 0's hook: "2 of 8 components built in software."
+   - A draft idea for Episode 0's hook: "2 of 8 components built in software."
 3. **002-security-audit-agent:** read-only audit, approval-gated apply mode, manual steps listed.
 
 After that, pick the next piece based on what's most interesting or most painful to do by hand.
@@ -231,6 +233,7 @@ After that, pick the next piece based on what's most interesting or most painful
 | Scene-spec fields added when used | Keeps the schema honest about what exists; adding a field later is cheap |
 | Disclaimers on sensitive topics, framed as learning in public | Honest without undercutting trust |
 | One protected git tag per episode | Viewers can read the code as shown; a GitHub ruleset guards the tag against deletion and moves |
+| Constitution of 12 short principles, with security rules in their own file | Principles stay readable; concrete rules can grow and be marked built, manual or planned without churning the constitution |
 | Bootstrap Episode 0 with the first slice | The pipeline can't make its own first video; the first slice plus manual steps gets a video out |
 
 ## Open questions
@@ -245,4 +248,4 @@ After that, pick the next piece based on what's most interesting or most painful
 - **Constitution** (`.specify/memory/constitution.md`): the principles agents follow. **Security rules** (`docs/security-rules.md`): the concrete rules behind its security principles.
 - **`specs/<feature>/spec.md`**: what and why for one piece, made with `/speckit.specify`, using this file as input.
 - **`specs/<feature>/plan.md`**: how to build that piece, made with `/speckit.plan`.
-- **`CLAUDE.md` / `AGENTS.md`** (to be written): point agents to all of the above.
+- **`CLAUDE.md` / `AGENTS.md`**: point agents to all of the above.

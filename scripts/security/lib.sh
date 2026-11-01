@@ -34,7 +34,10 @@ mark_drift() {  # group, message
 # check <group> <api path> <jq expr> <expected> <label>
 check() {
   local got
-  got=$(gh api "$2" --jq "$3" 2>/dev/null) || got="(unreadable)"
+  if ! got=$(gh api "$2" --jq "$3" 2>&1); then
+    mark_drift "$1" "$5: can't read it ($(head -n1 <<<"$got"))"  # fail closed, but show why
+    return
+  fi
   if [[ "$got" == "$4" ]]; then
     echo "   ok     $5"
   else
