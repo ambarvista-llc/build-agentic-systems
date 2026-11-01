@@ -50,7 +50,9 @@ fi
 
 echo "== Actions: GitHub-owned actions only, read-only token, approve all outside runs"
 gh api -X PUT "$R/actions/permissions" -F enabled=true -f allowed_actions=selected
-gh api -X PUT "$R/actions/permissions/selected-actions" -F github_owned_allowed=true -F verified_allowed=false
+# When the org already sets the allowed actions, the repo-level call returns 409. That's fine: the repo inherits it.
+gh api -X PUT "$R/actions/permissions/selected-actions" -F github_owned_allowed=true -F verified_allowed=false 2>/dev/null \
+  || echo "   allowed actions are set by the org, skipping"
 gh api -X PUT "$R/actions/permissions/workflow" -f default_workflow_permissions=read -F can_approve_pull_request_reviews=false
 gh api -X PUT "$R/actions/permissions/fork-pr-contributor-approval" -f approval_policy=all_external_contributors
 
