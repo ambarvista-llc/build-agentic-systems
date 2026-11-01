@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # Keeps pinned action SHAs current (the org requires SHA pinning).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # Add when the apps exist:
+  # - package-ecosystem: "uv"    # apps/pipeline
+  #   directory: "/apps/pipeline"
+  #   schedule:
+  #     interval: "weekly"
+  # - package-ecosystem: "npm"   # apps/renderer, apps/review
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
