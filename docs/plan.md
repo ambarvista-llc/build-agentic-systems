@@ -138,6 +138,8 @@ Videos on security, finance, legal, or health topics carry a disclaimer, said on
 
 Security-first from day one: it's cheap to start right, and it's a good first topic.
 
+The concrete rules are in [`docs/security-rules.md`](security-rules.md); this section records the baseline and settings.
+
 - **Code:** OWASP Cheat Sheets; avoid the CWE Top 25. **Process:** NIST SSDF.
 - **Agent-specific risks:** OWASP Top 10 for LLM Applications (prompt injection, unsafe output handling, excessive agent permissions).
 - **Untrusted input:** agents act only on content from allowlisted accounts. PR comments, fetched pages, source documents, and LLM output are treated as data, never as instructions.
@@ -240,7 +242,7 @@ After that, pick the next piece based on what's most interesting or most painful
 ## How this file relates to everything else
 
 - **`docs/plan.md`** (this file): the working plan for the whole project.
-- **Constitution** (`.specify/memory/constitution.md`, to be written): the principles agents follow.
+- **Constitution** (`.specify/memory/constitution.md`): the principles agents follow. **Security rules** (`docs/security-rules.md`): the concrete rules behind its security principles.
 - **`specs/<feature>/spec.md`**: what and why for one piece, made with `/speckit.specify`, using this file as input.
 - **`specs/<feature>/plan.md`**: how to build that piece, made with `/speckit.plan`.
 - **`CLAUDE.md` / `AGENTS.md`** (to be written): point agents to all of the above.
