@@ -37,7 +37,6 @@ BROWSER_FIELDS=(
   two_factor_requirement_enabled=true
   members_can_delete_repositories=false
   members_can_change_repo_visibility=false
-  members_can_invite_outside_collaborators=false
 )
 
 audit() {
@@ -51,6 +50,7 @@ audit() {
   check actions-workflow "$O/actions/permissions/workflow" .default_workflow_permissions read "Actions: read-only token"
   check actions-workflow "$O/actions/permissions/workflow" .can_approve_pull_request_reviews false "Actions: can't approve PRs"
   check actions-fork "$O/actions/permissions/fork-pr-contributor-approval" .approval_policy all_external_contributors "Actions: approve all outside runs"
+  note "outside-collaborator invites: members_can_invite_outside_collaborators=$(gh api "$O" --jq .members_can_invite_outside_collaborators); the restriction is Enterprise Cloud only, so on a free org keep repo admins to yourself"
   note "owners: $(gh api "$O/members?role=admin" --jq length). With one owner, save the 2FA recovery codes or add a second owner."
   note "allowed-action patterns: $(gh api "$O/actions/permissions/selected-actions" --jq '.patterns_allowed | length') (kept as they are when applying)"
   manual "Third-party access → restrict OAuth app access"
