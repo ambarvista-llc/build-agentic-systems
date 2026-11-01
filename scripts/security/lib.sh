@@ -48,6 +48,8 @@ check_ok() {
 }
 
 note() { echo "   note   $*"; }
+# plan_limit <message>: a baseline setting the current GitHub plan can't change. Informational; never counts as drift.
+plan_limit() { echo "   LIMIT  $* (plan limit, not counted as drift)"; }
 manual() { echo "   MANUAL $* (no API; check by hand)"; }
 
 # try <command...>: run a write, record a failure, keep going so the re-audit shows the full picture
