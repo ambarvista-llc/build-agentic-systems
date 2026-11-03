@@ -154,6 +154,7 @@ The concrete rules are in [`docs/security-rules.md`](security-rules.md); this se
 
 Grows out of `scripts/security/`.
 
+- **Built (Claude Code skills):** `/github-security-audit` runs the audits and reports drift. `/github-security-apply` is manual-only: it shows the changes and gives me the `--apply` command to run myself.
 - **Built (the seed):** `repo-baseline.sh` and `org-baseline.sh` audit by default (GET requests only, exit 1 on drift). `--apply` asks for a y/N on the terminal, writes only what drifted, then audits again. Settings with no API are listed as manual.
 
 - **Audit mode is read-only.** It reports how a repo and its org differ from the baseline.
