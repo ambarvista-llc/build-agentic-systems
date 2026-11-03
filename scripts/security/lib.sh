@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+# shellcheck disable=SC2154  # USAGE is set by the script that sources this file
 # Shared helpers for the baseline scripts. Sourced, not run.
 #
 # Every script audits first (GET requests only) and prints what differs from the

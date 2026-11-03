@@ -13,6 +13,7 @@
 #
 # This is the seed of the planned security audit agent (spec 002).
 set -euo pipefail
+# shellcheck source=lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 USAGE="usage: repo-baseline.sh <owner>/<repo> [--apply]"

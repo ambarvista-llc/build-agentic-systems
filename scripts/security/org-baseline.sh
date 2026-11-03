@@ -11,6 +11,7 @@
 #
 # Some org settings can't be read or changed through the API; they're listed as MANUAL.
 set -euo pipefail
+# shellcheck source=lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 USAGE="usage: org-baseline.sh <org> [--apply]"
